@@ -15,3 +15,90 @@ css селектор корневого узла
 - v-on:click="counter--
 
 #### начинаем писать приложение
+
+- Список заметок
+
+#### байндинг в инпуте
+
+v-bind:value="inputValue"
+
+#### методы- набор функций, которые есть в приложении
+
+metods =>
+
+- inputChangeHandler
+- addNewNote
+
+#### модификаторы
+
+задача: по клавише enter очищается инпут и добавляется заметка
+
+- v-on:keypress.enter="addNewNote"
+
+#### передача параметров в метод
+
+задача: удаляем выбранный элемент по его индексу
+
+- removeNote(idx)
+
+#### условный рендеринг v- if , v-else, v-else-if
+
+задача: если нет заметок, то мы скрываем див и показываем сообщение
+
+v-if="!notes.length"
+
+#### методы в шаблоне
+
+задача: все заметки отображаются в верхнем регистре
+
+- {{toUpperCase(note) }}
+
+#### сокращаем код, используя ярлыки
+
+v-bind
+
+- :
+
+  v-on
+
+- @
+
+#### оптимизация с computed
+
+computed зызывается только если вызывается данный метод
+computed =>
+
+- doubleCountComputed()
+
+#### следим за свойствами с watch
+
+задача: обнулять inputValue при его значении > 10 символов
+watch =>
+создаём метод, который называется как и переменная в data
+inputValue
+
+#### v-model
+
+двусторонний байндинг
+
+- v-model="inputValue"
+
+#### задаём инлайн стили
+
+задача: если меньше 10 символов, то закрашиваем заголовок darkred, если больше darkblue
+
+- :style="{color: inputValue.length < 5 ? 'darkred': 'darkblue' }
+
+#### работа с css классами
+
+задача: если больше или равно 5 символов, то class primary, если меньше, то bold
+
+- :class="note.length >= 5 ? 'primary': 'bold'
+
+bold для всех, для note.length >=5 primary
+
+- :class=" ['bold', {'primary' : note.length >=5 }]
+
+или так
+
+- :class=" {'primary' : true, 'bold': note.length >= 5 }
