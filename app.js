@@ -1,31 +1,46 @@
-Vue.createApp({
-  data: () => ({
-    myHtml: " <h1>Vue 3 App</h1>",
-    title: "я есть Грут",
-    person: {
-      firstName: "Maxim",
-      lastName: "Zozulya",
-      age: 27,
-    },
-    items: [2, 4],
-  }),
+const h = Vue.h;
 
+const app = Vue.createApp({
+  data() {
+    return {
+      title: " Это свойство template",
+      title_new: " Изменили!",
+    };
+  },
   methods: {
-    addItem(event) {
-      this.items.unshift(this.$refs.myInput.value);
-      this.$refs.myInput.value = "";
-      console.log(event.key);
-    },
-    remove(index) {
-      this.items.splice(index, 1);
-    },
-    log(item) {
-      console.log("item", item);
+    changeTitle() {
+      this.title = this.title_new;
     },
   },
-  //   computed: {
-  //     evenItems() {
-  //       return this.items.filter((i) => i % 2 === 0);
-  //     },
-  //   },
-}).mount("#app");
+  //   template: `
+  //     <div class="card center">
+  //     <h1>{{title}}</h1>
+  //     <button class="btn"
+  //     @click = " title = title_new "
+  //     >
+  //         Изменить
+  //     </button>
+  //     </div
+  //     `,
+  render() {
+    return h(
+      "div",
+      {
+        class: "card center",
+      },
+      [h("h2", {}, this.title)],
+      [h("button", { class: "btn", onClick: this.changeTitle }, "Изменить")]
+    );
+  },
+});
+app.mount("#app");
+
+const app2 = Vue.createApp({
+  data() {
+    return {
+      title: "New title 2",
+    };
+  },
+});
+
+app2.mount("#app2");

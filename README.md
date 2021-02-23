@@ -1,57 +1,32 @@
-## 3 Что ещё есть во Vue
+## 4 Как работает Vue
 
-#### директывы
+#### свойство template
 
-v-text - аналог {{}}
+создаёт структуру html
+js => const app => Vue.createApp =>
 
-v-once - не изменяет title
+- template
 
-v-pre - не изменяет title (отменяет байндинг), вводит его как есть
+#### virtual DOM и render
 
-v-html - передаёт html в виде переменной
+js =>
 
-v-cloak - страница рисуется тогда, когда загрузился vue
+- const h = Vue.h
 
-v- show - скрывает элемент из dom дерева, а не удаляет его
+js => const app => Vue.createApp => render =>
 
-#### циклы с v-for
+- return h
 
-выводит item 7 раз
+#### реактивность и Proxy
 
-- (item, i) in 7
+#### Жизненный цикл компонента
 
-итерация по объекту и вывод в шаблон пары ключ - значений
+- https://v3.vuejs.org/guide/instance.html#lifecycle-diagram
 
-- v-for="(value, key) in person "
-
-#### зачем нужен key
-
-@click.stop - отменяем действие при клике (погружение события)
-
-для оптимизации приложения без багов
-
-- :key="item"
-
-#### Пример. Фильтрация списков
-
-computed => evenItems =>
-
-- return this.items.filter((i) => i % 2 === 0)
-
-#### модификаторы
-
-сохранения действия при enter
+#### Создание нескольких приложений
 
 html =>
 
-- @keyup.enter="addItem($event)"
-
-js => methods =>
-
-- addItem
-
-#### вызов нескольких функций
-
-html =>
-
-- @click="remove(index), log(item)"
+- div class="card" id="app2
+- app.mount("#app")
+- app2.mount("#app2");
