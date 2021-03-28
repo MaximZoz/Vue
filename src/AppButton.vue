@@ -6,8 +6,7 @@
 
 <script>
 export default {
-  emits: 
-    ['action'],
+  emits: ["action"],
 
   props: {
     color: {
@@ -18,7 +17,12 @@ export default {
       },
     },
   },
+  methods: {
+    btnLog() {
+      console.log("Button log");
+    },
+  },
 };
 </script>
 
-<style></style>
+<style scoped></style>

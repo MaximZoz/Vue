@@ -156,4 +156,42 @@ src\App.vue =>template => app-list => template =>
 src\AppList.vue =>template => ul => li => 
 - slot
 
-###  Transfer parameters in slot
+###   examples of dinamic components
+
+src\App.vue =>template => app-button => 
+- one
+- two
+
+src\App.vue =>template => app-button => component => 
+- is="componentName"
+
+###   how use keep-alive
+
+src\App.vue =>template =>
+- keep-alive
+
+### advanced syntax properties "computed"
+
+src\App.vue => script => computed => componentName =>
+
+
+- get
+- set
+
+###  get access to component with "ref"
+
+src\AppButton.vue => script => methods => 
+- btnLog
+
+src\App.vue => script => mounted => 
+-  this.$refs.myBtn.btnLog()
+
+
+###  asynchronous component
+
+src\main.js => import => 
+- defineAsyncComponent
+
+
+src\main.js => app.component => defineAsyncComponent => 
+-  return import("./AppAsyncComponent.vue")

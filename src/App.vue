@@ -1,42 +1,68 @@
 <template>
   <div class="container pt-1">
     <div class="card">
-      <h2>slots</h2>
+      <async-component></async-component>
+      <h2>
+        Dinamic and аssinchronous components
+      </h2>
+      <app-button ref="myBtn" :color="oneColor" @action="active = 'one'"
+        >one
+      </app-button>
+      <app-button :color="twoColor" @action="active = 'two'">two </app-button>
     </div>
-
-    <app-list>
-      <template #default="{index,iter }">
-        <strong> index: {{ index + 1 + ")" }} </strong>
-        <span style="color: #c25205;"> item: {{ iter }} </span>
-      </template>
-    </app-list>
-    <app-block>
-      <p>
-        this is text for new block
-      </p>
-      <template v-slot:header>
-        <h3>
-          it is title
-        </h3>
-      </template>
-      <template #footer>
-        <hr />
-        <small>
-          it is footer
-        </small>
-      </template>
-    </app-block>
+    <keep-alive>
+      <component :is="componentName"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import AppBlock from "@/AppBlock";
-import AppList from "@/AppList";
+import AppButton from "./AppButton";
+import AppTextOne from "./AppTextOne.vue";
+import AppTextTwo from "./AppTextTwo.vue";
+
+
 export default {
-  components: {
-    AppBlock,
-    AppList,
+  data() {
+    return {
+      active: "", //two
+    };
   },
+
+  mounted() {
+    setTimeout(() => {
+      this.componentName = "new component name";
+    }, 1500),
+      this.$refs.myBtn.btnLog()
+  },
+
+  computed: {
+    // componentName() {
+    //   if (this.active === "one") {
+    //     return "app-text-one";
+    //   }
+    //   return "app-text-two";
+    // },
+    // return "app-text-" + this.active;
+    // },
+    componentName: {
+      get() {
+        return "app-text-" + this.active;
+      },
+
+      set(value) {
+        console.log("componentName: ", value);
+      },
+    },
+    oneColor() {
+      return this.active === "one" ? "primary" : "";
+    },
+    twoColor() {
+      return this.active === "two" ? "primary" : "";
+    },
+  },
+  components: { AppButton, AppTextOne, AppTextTwo, },
 };
 </script>
+
 <style scoped></style>
