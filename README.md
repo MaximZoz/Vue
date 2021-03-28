@@ -1,60 +1,135 @@
-## 4 практика
+## 6 Создание своего элемента формы
 
-### создаём шаблон 
-index.html =>
-- div class="container" id="app"
-### создаём массив, в который помещаем title и активный шаг 
- data => 
-- steps: [{title, text},]
-### создаём активный индекс
- data=> 
-- activeIndex
-### создаём метод, который уменьшает активный инндекс на единицу
-methods =>
-- prev
-### в шаблоне в контейнере создаём div class="card" с текстом, который появляется из массива с помощью computed activeStep
-div class="steps-content" =>
- activeStep.text
-### в шаблоне перебираем steps и выводим step и idx в li и span
+### Создаём компонент
 
-html => div => ul => li =>
--  v-for="(step, idx) in steps"
+src\TheHeader.vue =>
 
-html => div => ul => span =>
--  {{idx + 1}}
+- template
 
-html => div => ul => li =>
--  {{step.title}}
-### в шаблоне подсвечиваем стили активного индекса при клике 
-html => div => ul => li =>
--  :class="{active: idx === activeIndex,done: idx < activeIndex}"
+### регистрируем компонент в приложинии, которое создаём
 
-### при клике на span вызываем метод setActive в который передаём индекс и делаем его активными
+src\main.js =>
 
-methods =>
-- setActive
+- import TheHeader
+- const app = createApp(App)
+- app.mount ('#app')
 
-### если isActive = true, то создаём div, в котором есть кнопка 'назад' , которая задизейблена, если activeIndex = 0 и есть кнопка 'вперёд'
+### объявляем компонент the-header
+
+src\TheHeader.vue => template =>
+
+- the-header
+
+### подключаем стили
+
+src\main.js =>
+
+- import theme.css
+
+### реализовываем задачу открывать новости при клике на кнопку
+
+src\App.vue => script => data =>
+
+- isOpen: false
+
+src\App.vue => template => button =>
+
+- @click="isOpen = !isOpen"
+
+src\App.vue => template => p =>
+
+- v-if="isOpen"
+
+### создаём отдельный компонент
+
+src\AppNews.vue
+
+### регистрируем его локально в главном компоненте
+
+src\AppNews.vue => script =>
+
+- import AppNews from "./AppNews"
+
+src\AppNews.vue => script => components =>
+
+- "app-news": AppNews,
+
+src\AppNews.vue => template =>
+
+- app-news
+
+### передаём параметры в компонент
+
+src\App.vue => template => app-news =>
+
+- v-for="item in news" :key="item" :title="item"
+
+src\AppNews.vue => template => h3 =>
+
+- title
+
+### валидируем параметры
+
+src\AppNews.vue => script => props => isOpen => validator
+
+- return value === true || value === false
+
+### как эмитить события
+
+src\AppNews.vue => script => methods => open =>
+
+- this.\$emit("open-news", 22);
+
+src\App.vue => methods => openNews =>
+
+- data
+
+src\AppNews.vue => template =>
+
+- @open-news="openNews"
+
+### Валидируем исходящее событие
+
+emits показывает какие кастомные события компонент отдаёт наверх
+и добаляет возможность валидировать emits
+
+src\AppNews.vue => script => emits =>
+
+- "close-news": null,
+- "open-news"(num) {}
+
+### Add logic
+ create button with name  "Отметить непрочитанной" , send emit 'id' to it
+
+src\AppNews.vue => template => button =>
+
+-  @click="$emit('unmark', id)"
+-   v-if="wasRead"
 
 
-html => div =>
+take emit with 'id' of AppNews, create method which should change state 'wasRead'
 
--   v-if="isActive"
+src\App.vue => template => app-news =>
+- @unmark="unreadNews"
 
-html => div => button =>
+src\App.vue => template => app-news =>
+- unreadNews(id)
 
--   :disabled="prevDisabled"
+###  create component for button
 
-### при клике на 'назад' вызываем метод prev, который делает activeIndex -1
+- src\AppButton.vue
 
--   @click="prev"
+###  Transfer parameters with provide and inject
 
-### при клике на 'вперед' или 'закончить' вызываем метод nextOfFinish, который делает   this.activeIndex++
- html => div => button =>
+ src\App.vue => provide =>
+ - return {news: this.news };
 
-- @click="nextOfFinish"
-- {{ isLastStep ? 'Закончить' : 'Вперед' }}
-### если isActive = false, то появляется кнопка "Начать заного", при клике вызываем метод reset
+ src\AppNewsList.vue => inject =>
 
- html => div => button =>
-- reset
+- 'news'
+###  Styles in components
+
+ src\App.vue => style =>
+
+- scoped
+
