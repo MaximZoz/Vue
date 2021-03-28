@@ -133,3 +133,27 @@ src\App.vue => template => app-news =>
 
 - scoped
 
+
+###  how slots works
+
+src\App.vue =>template => app-block => p =>
+- text
+
+src\AppBlock.vue => 
+- slot
+
+
+default value
+
+src\AppBlock.vue => slot =>
+- no text
+
+###  Transfer parameters in slot
+
+src\App.vue =>template => app-list => template => 
+- default
+
+src\AppList.vue =>template => ul => li => 
+- slot
+
+###  Transfer parameters in slot
