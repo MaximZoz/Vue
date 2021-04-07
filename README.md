@@ -46,3 +46,20 @@ src\App.vue => script => methods => submitHandler =>
 - if (this.formIsValid()
 
 ### create custom model for components
+
+src\App.vue => template => form => app-input =>
+
+- placeholder
+- error
+- label
+-v-model:value
+
+src\App.vue => script => 
+- import AppInput
+
+src\App.vue => script => components =>
+- AppInput
+
+src\AppInput.vue => 
+- template
+- script
