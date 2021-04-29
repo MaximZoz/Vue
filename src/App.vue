@@ -20,19 +20,12 @@
 <script>
 import AppAlert from "./components/AppAlert";
 import AppBlock from "./components/AppBlock";
+import alertMixin from "./alertMixin";
 export default {
-  data() {
-    return {
-      alert: false,
-    };
-  },
-  methods: {
-    toggleAlert() {
-      this.alert = !this.alert;
-    },
-  },
+  mixins: [alertMixin],
   components: {
-    AppAlert, AppBlock
+    AppAlert,
+    AppBlock,
   },
 };
 </script>

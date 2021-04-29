@@ -16,18 +16,10 @@
 </template>
 
 <script>
+import alertMixin from "../alertMixin";
 import AppAlert from "./AppAlert";
 export default {
-  data() {
-    return {
-      alert: false,
-    };
-  },
-  methods: {
-    toggleAlert() {
-      this.alert = !this.alert;
-    },
-  },
+  mixins: [alertMixin],
   components: {
     AppAlert,
   },
