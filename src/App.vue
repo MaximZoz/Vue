@@ -1,31 +1,52 @@
 <template>
   <div class="container">
-    <app-alert
-      v-if="alert"
-      text="это сообщение"
-      title="Внимание!"
-      type="danger"
-      closable
-      @close="alert = false"
-    ></app-alert>
     <div class="card">
-      <button class="btn danger" @click="toggleAlert">
-        {{ !alert ? "показать " : "скрыть " }}сообщение
+      <h2></h2>
+      <h2>
+        {{ $i18n("app.title") }}
+      </h2>
+      <button class="btn" @click="changeLang">
+        {{ $i18n("app.buttonChange") }}
       </button>
+      <button class="btn primary" @click="modal = true">
+        открыть модалку
+      </button>
+
+      <teleport to="body">
+        <app-modal v-if="modal" @close="modal = false"></app-modal>
+      </teleport>
     </div>
-    <app-block></app-block>
   </div>
 </template>
 
 <script>
-import AppAlert from "./components/AppAlert";
-import AppBlock from "./components/AppBlock";
-import alertMixin from "./alertMixin";
+import AppModal from "./components/AppModal";
 export default {
-  mixins: [alertMixin],
   components: {
-    AppAlert,
-    AppBlock,
+    AppModal,
+  },
+  data() {
+    return {
+      langEn: false,
+      modal: false,
+    };
+  },
+  mounted() {
+    // this.$alert('gfgrgrt')
+  },
+  inject: ["changeI18N"],
+  methods: {
+    changeLang() {
+      this.langEn;
+      if (this.langEn) {
+        this.changeI18N("ru");
+        this.langEn = !this.langEn;
+      } else {
+        this.changeI18N("en");
+        this.langEn = true;
+      }
+      this.$forceUpdate();
+    },
   },
 };
 </script>
