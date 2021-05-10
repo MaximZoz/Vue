@@ -1,79 +1,86 @@
-# Mixins, directives and plugins
+# Vue Router
 
-### create component alert
-src\components\AppAlert.vue =>
-- appAlert
+### Setting Router
 
-### how mixins work
+- npm i vue-router@next
+- src\router.js
 
-src\alertMixin.js =>
-- alertMixin
+src\main.js => createApp
+- .use(router)
 
-src\components\AppBlock.vue => script => mixins => 
-- alertMixin
-### create your own directive
+### add different pages
+- src\router.js
 
-src\components\App.vue => script => directives => focus => 
-- focusDirective
+src\views\Login.vue => 
+- router-link to="/forget"
 
-src\components\App.vue => template => input =>
-- focus
+### how to display an active link
+src\App.vue => provide =>
+- login
+- logout
 
-- src\focusDirective.js 
+src\App.vue => methods =>
+- login
+- logout
 
-### life cycle of directives
- src\colorDirective.js =>
- - mounted
- - updated
+src\components\TheNavbar.vue => inject => 
+- logout
 
-### pass parameters to directive
-src\App.vue => 
+src\views\Login.vue => inject => 
+- login
 
-### working with modifiers
-src\colorDirective.js => mounted => 
-- binding.modifiers.hover
+src\views\Login.vue => method => submit =>
+- login
 
-src\colorDirective.js => unmounted => 
-- el.removeEventListener('mouseover', mouseover)
-- el.removeEventListener('mouseout', mouseouts)
+### how to display active link
 
-src\App.vue => template => div => h2 => 
-- v-color:type.hover="myColor"
+src\router.js => createRouter =>
+- linkActiveClass: "active"
+- linkExactActiveClass: "active"
 
-### plugin creation
+### remember the page with parameters in the url
+src\App.vue => methods => login =>
+- if (this.$route.query.page) {this.$router.push(this.$route.query.page)} 
+  else {this.$router.push("/dashboard")}
 
-src\main.js => 
-- vapp.use(translatePlagin, {test:1})
+src\App.vue => methods => logout =>
+- this.$router.push(query:{page})
 
-src\translatePlagin.js => install => 
+### dynamic parameters in in the url
+src\views\Mail.vue => template => router-link => to =>
+- "'/mail/' + email.id"
 
-- app
-- options
+### nested routes
+src\router.js => routes => children => 
+- component: AppEmailBody
 
-src\App.vue => template => button =>
-- @click="$alert"
-
-### creating a multilingual plugin
-
-src\App.vue => template => button, h2 =>
-
-- @click="changeLang"
-- {{ $i18n("app.buttonChange") }}
-
-src\App.vue => methods => 
-- changeLang
+src\views\Mail.vue => template =>
+- `<router-view></router-view>`
 
 
-src\translatePlagin.js =>
-- install
+### manually manage link state
+src\components\TheNavbar.vue => template => router-lin =>
+- custom v-slot="{ navigate, href }"
+- @click="navigate"
+- :class="{active: $route.path.indexOf(href) !== -1}"
 
-src\main.js =>
-- app.use(translatePlagin, { ru, en });
-- const ru, en
+### 404 page and redirect
+src\router.js => routes =>
+- { path: '/:notFound(.*)', component: NotFound }
 
-### Modal window with Teleport
-- src\components\AppModal.vue
+- src\views\NotFound.vue
 
-src\App.vue => template => app-modal =>
+### ways to protect pages
+src\router.js => 
+- router.beforeEach
+- router.afterEach
 
-- teleport to="body"
+src\views\Dashboard.vue => 
+- beforeRouteLeave
+
+
+### optimization with Lasy Loading
+src\router.js =>
+- const Mail = () => import("./views/Mail")
+
+ 
