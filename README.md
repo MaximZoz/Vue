@@ -1,45 +1,75 @@
-# Vuex
+# Composition API
 
-### work with the Store
+### how work setup and ref
 
- npm install --save vuex@next
+src\App.vue => 
+- import { ref } from "vue";
 
- ### what are mutations
- 
-    src\store\modules\counter.js => mutations => increment =>
- -  state.counter++
+src\App.vue => script =>setup => 
+- const name = ref("vueJS");
+- const version = ref(3);
 
- src\App.vue
- ### why do we need getters
+### Work with function
+src\App.vue => script => function => 
+- changeInfo
 
-src\store\index.js => createStore => getters =>
-- uppercaseTitle
+src\App.vue => template => button => 
+- @click="changeInfo"
 
-src\App.vue => computed => mapGetters =>
-- uppercaseTitle
+### ref and reactive
+ref:
+src\App.vue => script => setup =>
+- const name = ref("vueJS");
+- const version = ref(3);
 
-src\App.vue => template => h1 => 
-- doubleCounter
- ### how actions work
- src\store\modules\counter.js => actions => incrementAsync(context, payload) =>
--  context.commit("add", payload)
+reactive: 
+src\App.vue => script => setup => framework =>
 
-src\App.vue => mapActions => 
-- incrementAsync
+- reactive({name: "vueJS",version: 3})
 
-src\App.vue => template => 
-- @click="incrementAsync({ value: 10, delay: 2000 })"
- ### context object
- 
- ### how mappers help us
- src\App.vue => 
- - ...mapGetters
- - ...mapActions
- - ...mapMutations
- ### share logic with modules
- 
- ### named modules with namespace
+src\App.vue => script => setup => function changeInfo =>
+- framework.name = "VueJS new!";
+- framework.version = 4.2;
 
-### how to organize the file structure
+### how work computed
+src\App.vue => 
+- import { computed } from "vue";
 
-### how to add plugins
+src\App.vue => script => setup => doubleVersion => 
+- computed(() => framework.version * 2)
+
+### how use watch
+src\App.vue => 
+- import { watch } from "vue";
+
+src\App.vue => script => setup => watch => 
+- (doubleVersion, (newValue, oldValue) =>{})
+
+### get access to Dom elements
+
+src\App.vue => script => setup =>
+- const textInput = ref(null);
+
+
+src\App.vue => template => input =>
+-  ref="textInput" 
+
+### work with v- model
+
+src\App.vue => script => setup =>
+- const firstName = ref("");
+
+src\App.vue => template => input =>
+- v-model="firstName"
+
+### component interactions
+
+src\FrameworkInfo.vue => script => props =>
+- "name",
+- "version"
+
+src\FrameworkInfo.vue => script => setup =>
+- return {doubleVersion: computed(() => props.version * 2)}
+
+### passing the event to the parent component
+00 : 48

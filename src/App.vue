@@ -1,37 +1,57 @@
 <template>
-  <the-navbar></the-navbar>
-  <div class="container with-nav">
+  <div class="container">
     <div class="card">
-      <h1>{{ uppercaseTitle }}</h1>
-      <h2>Счетчик {{ counter }} ({{ doubleCounter }})</h2>
-      <button class="btn primary" @click="add">Добавить 1</button>
-      <button
-        class="btn danger"
-        @click="incrementAsync({ value: 10, delay: 2000 })"
-      >
-        Добавить 10
-      </button>
+      <h1>Vue Composition Api</h1>
+      <small>
+        data, method, computed, watch
+      </small>
+      <hr />
+
+      <div class="form-control">
+        <!-- <input type="text" v-model="firstName" /> -->
+      </div>
+      <button class="btn" @click="changeInfo">Изменить</button>
+      </div>
+        <framework-info :name="name" :version="version"></framework-info>
     </div>
-  </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
-import TheNavbar from "./TheNavbar";
+import { ref, reactive, toRefs, isRef, isReactive, computed, watch } from "vue";
+import FrameworkInfo from "./FrameworkInfo";
 
 export default {
-  components: { TheNavbar },
-
-  computed: {
-    ...mapGetters(["uppercaseTitle"]),
-    ...mapGetters("count", ["counter", "doubleCounter"]),
+  components: {
+    FrameworkInfo,
   },
+  setup(props) {
+    const name = ref("vue");
+    const version = ref(3);
 
-  methods: {
-    ...mapMutations({
-      add: "count/increment",
-    }),
-    ...mapActions("count", ["incrementAsync"]),
+    const framework = reactive({
+      name: "vueJS",
+      version: 3,
+    });
+
+    // const textInput = ref("");
+    const firstName = ref("");
+
+    function changeInfo(params) {
+      name.value = "VueJS new!";
+      version.value = 4.2;
+    }
+    // const doubleVersion = computed(() => framework.version * 2);
+
+    return {
+      name,
+      version,
+      // ...toRefs(framework),
+      // framework,
+      // doubleVersion,
+      changeInfo,
+      // textInput,
+      firstName,
+    };
   },
 };
 </script>
