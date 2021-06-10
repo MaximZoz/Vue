@@ -6,16 +6,28 @@
     <p>
       Версия: <strong>{{ version }}/{{ doubleVersion }}</strong>
     </p>
+    <button class="btn warning" @click="changeToThree">
+      изменить на 3-ю версию
+    </button>
   </div>
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 export default {
-  props: ["name", "version"],
-  setup(props) {
+  // emits: ["change-version"],
+
+  setup(props, context) {
+    function change() {
+      context.emit("change-version", 3);
+    }
+    const name = inject("name");
+    const version = inject("version");
     return {
-      doubleVersion: computed(() => props.version * 2),
+      name,
+      version,
+      changeToThree: change,
+      doubleVersion: computed(() => version.value * 2),
     };
   },
   // computed: {

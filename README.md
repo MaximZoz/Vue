@@ -72,4 +72,24 @@ src\FrameworkInfo.vue => script => setup =>
 - return {doubleVersion: computed(() => props.version * 2)}
 
 ### passing the event to the parent component
-00 : 48
+
+src\FrameworkInfo.vue => template => button =>
+- @click="changeToThree"
+
+src\FrameworkInfo.vue => script => setup =>
+- setup(props, context) {
+    function change() {
+      context.emit("change-version", 3);
+    } ...
+
+src\FrameworkInfo.vue => script => setup =>
+- const name = inject("name");
+- const version = inject("version");
+
+src\App.vue => script => setup =>
+- provide("name", name);
+- provide("version", version);
+
+
+### lifecycle methods
+1 : 00 : 49
